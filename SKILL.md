@@ -35,22 +35,31 @@ AI 功能 → 测试 → 安全审计 → 代码评审 → 部署上线）完成
 
 ### 定位技能根目录 {SKILL_ROOT}
 
-使用 **LS 工具**依次检查以下路径，第一个存在的即为 `{SKILL_ROOT}`：
+`{SKILL_ROOT}` 即本仓库根目录（SoloSquad/）。当在其他 AI 工具中导入本技能时，按以下方式定位：
 
-| 序号 | Windows | macOS / Linux |
-|------|---------|---------------|
-| 1 | `%USERPROFILE%\.trae-cn\skills\software-team-simulator\` | `~/.trae-cn/skills/software-team-simulator/` |
-| 2 | `%USERPROFILE%\.trae-cn\skills\TraeSkill\` | `~/.trae-cn/skills/TraeSkill/` |
-| 3 | `%USERPROFILE%\.agents\skills\software-team-simulator\` | `~/.agents/skills/software-team-simulator/` |
-| 4 | `%USERPROFILE%\.agents\skills\TraeSkill\` | `~/.agents/skills/TraeSkill/` |
+**方式一：直接使用（推荐）**
+将本仓库克隆或下载到本地后，仓库根目录即为 `{SKILL_ROOT}`：
+```
+SoloSquad/               ← 这就是 {SKILL_ROOT}
+├── SKILL.md
+├── roles/
+├── shared/
+├── templates/
+└── ...
+```
 
-> Windows 环境变量 `%USERPROFILE%` 等同于 `C:\Users\{用户名}`。
+**方式二：AI 工具的 skills 目录**
+如果你使用的 AI 工具支持技能系统（如 TRAE、opencode 等），将本仓库放入其 skills 目录后，使用 **LS 工具**依次检查以下路径，第一个存在的即为 `{SKILL_ROOT}`：
+
+| 序号 | macOS / Linux | Windows |
+|------|---------------|---------|
+| 1 | `~/.agents/skills/SoloSquad/` | `%USERPROFILE%\.agents\skills\SoloSquad\` |
+| 2 | `~/.agents/skills/solosquad-auto-pipeline/` | `%USERPROFILE%\.agents\skills\solosquad-auto-pipeline\` |
+| 3 | `~/.config/opencode/skills/SoloSquad/` | `%USERPROFILE%\.config\opencode\skills\SoloSquad\` |
+
+> 如果以上路径都不存在，直接搜索当前工作目录中 `SKILL.md` 所在目录即为 `{SKILL_ROOT}`。
 
 找到后，角色文件路径为 `{SKILL_ROOT}/roles/角色代号.md`，共享规范在 `{SKILL_ROOT}/shared/`。
-
-**若以上路径都不存在**，运行以下命令列出已安装的技能目录，从中找到包含 `roles/` 子目录的那个：
-- Windows: `Get-ChildItem "$env:USERPROFILE\.trae-cn\skills" -Directory`
-- macOS/Linux: `ls -d ~/.trae-cn/skills/*/`
 
 > 项目产出物（`docs/`）始终在项目工作区，不是技能目录。
 
