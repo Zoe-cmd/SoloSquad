@@ -294,7 +294,7 @@ git push origin --tags
    git push origin feature/user-auth
 
 5. 创建 Pull Request / Merge Request
-   目标分支: develop
+    目标分支: develop
 
 6. Code Review 通过后合并
    git checkout develop
