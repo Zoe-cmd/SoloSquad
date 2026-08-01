@@ -58,7 +58,7 @@ cat > docs/state.json << 'EOF'
 EOF
 ```
 
-> 项目经理的代号固定为 `project-manager`，最终验收时使用 `project-manager-final` 区分。
+> 项目经理在 Phase 0 使用 `project-manager`，在 Phase 5 验收时使用 `project-manager-final`。这是同一个角色，只是阶段任务不同，用不同代号方便 state.json 追踪进度。
 
 ## 状态文件读写规范
 
@@ -154,7 +154,7 @@ jq '.issues += [{"id": "ISS-001", "type": "bug", "description": "问题描述", 
     │
 [自动推进] ─── 读取交接文档 → 激活 运维工程师 → 完成 → 更新 state.json → 写检查点
     │
-[自动推进] ─── 读取交接文档 → 激活 项目经理验收 → 完成 → 更新 state.json → 写检查点
+[自动推进] ─── 读取交接文档 → 激活 项目经理（验收） → 完成 → 更新 state.json → 写检查点
     │
     ▼
 ✅ 项目全部完成！输出交付物清单
@@ -274,7 +274,7 @@ loop:
 ### 角色代号映射表
 
 > 角色代号对应关系见 `SKILL.md` 的「角色代号映射表」章节。此处仅列出关键补充：
-> - `project-manager-final` — 项目经理验收阶段（最终验收，非项目初始化）
+> - `project-manager-final` — 项目经理（验收阶段），与 `project-manager` 是同一个角色，只是阶段不同
 
 ### 更新时机
 
