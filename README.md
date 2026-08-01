@@ -59,10 +59,11 @@ AI Agent 只能创建规范中列明的文件，不得自行发明文件名。�
 
 ```text
 TraeSkill/
-├── SKILL.md                      TRAE Skill 入口（YAML 元数据 + 协调指令）
-├── README.md                     你正在看的这个文件
-├── workflow.md                   全流程工作流定义（含单角色单对话原则）
-├── VERSIONING.md                 版本管理协议（语义化版本 + 迁移矩阵）
+├── SKILL.md                     TRAE Skill 入口（YAML 元数据 + 协调指令 + 变更管理规则）
+├── README.md                    你正在看的这个文件
+├── workflow.md                  核心工作流定义（概述、角色、Phase、交接、状态）
+├── workflow-supplement.md       补充流程（异常处理、变更管理、角色依赖、时间估算）
+├── VERSIONING.md                版本管理协议（语义化版本 + 迁移矩阵）
 │
 ├── roles/                       13 个 AI Agent 技能手册（每个 300+ 行）
 │   ├── product-manager.md        产品经理 — 需求分析、PRD 撰写
@@ -79,23 +80,23 @@ TraeSkill/
 │   ├── project-manager.md        项目经理 — 进度跟踪、风险管理
 │   └── tech-lead.md              技术负责人 — 技术决策、架构评审
 │
-├── shared/                       13 本共享规范 — 所有 Agent 共同遵守
+├── shared/                       14 本共享规范 — 按角色需要加载，非全部预读
 │   ├── coding-standard.md        编码规范（TypeScript / Python / Java / Go）
 │   ├── api-standard.md           REST API 设计规范
 │   ├── database-standard.md      数据库设计规范
 │   ├── git-standard.md           Git 分支与提交规范
 │   ├── testing-standard.md       测试规范
 │   ├── deployment-standard.md    部署规范
-│   ├── review-standard.md        代码评审规范
+│   ├── review-standard.md        代码评审规范（含严重等级定义）
 │   ├── documentation-standard.md 文档规范（含文件清单 + 禁止创建清单外文件）
 │   ├── decision-log-standard.md  技术决策记录规范
 │   ├── task-standard.md          任务管理规范
 │   ├── context-standard.md       上下文管理规范
 │   ├── memory-standard.md        记忆管理规范
-│   ├── handoff-standard.md       Agent 交接规范
-│   ├── worklog-standard.md       工作日志与防漂移规范
+│   ├── handoff-standard.md       Agent 交接规范（含缺陷修复回路）
+│   └── worklog-standard.md       工作日志与防漂移规范
 │
-├── templates/                    9 个文档模板 — 拿来即用
+├── templates/                    12 个文档模板 — 拿来即用
 │   ├── project-plan-template.md  项目计划文档模板
 │   ├── prd-template.md           产品需求文档模板
 │   ├── architecture-template.md  架构设计文档模板
@@ -104,7 +105,10 @@ TraeSkill/
 │   ├── test-template.md          测试计划文档模板
 │   ├── deployment-template.md    部署计划文档模板
 │   ├── decision-log-template.md  决策记录文档模板
-│   └── todo-template.md          任务清单模板
+│   ├── todo-template.md          任务清单模板
+│   ├── team-plan-template.md     团队规划文档模板
+│   ├── change-request-template.md 变更请求文档模板
+│   └── changelog-template.md      变更总览文档模板
 │
 └── examples/                     完整示例项目 — 可直接参考
     └── sample-project/           TaskFlow 任务管理系统
@@ -181,27 +185,13 @@ docs/
 | Phase 3 | AI 工程师 | `roles/ai-engineer.md` | AI 功能、RAG 管线 |
 | Phase 4 | 测试工程师 | `roles/qa-engineer.md` | 测试计划、测试报告、缺陷报告 |
 | Phase 4 | 安全工程师 | `roles/security-engineer.md` | 安全审计报告 |
-| Phase 5 | 代码评审工程师 | `roles/code-reviewer.md` | 代码审查报告、重构建议 |
+| Phase 4 | 代码评审工程师 | `roles/code-reviewer.md` | 代码审查报告、重构建议 |
 | Phase 5 | 运维工程师 | `roles/devops-engineer.md` | 部署计划、CI/CD 配置 |
+| Phase 5 | 项目经理 | `roles/project-manager.md` | 项目总结、经验教训 |
 
 ### 缺陷修复回路
 
-当测试工程师、安全工程师或代码评审工程师发现 Critical/High 问题时，触发特殊流程：
-
-```
-QA / 安全工程师 / 代码评审工程师 发现 Critical/High 问题
-    ↓
-发现问题者生成 docs/交接/缺陷修复交接-{BUG-ID/VULN-ID/REVIEW-ID}.md（含完整问题详情）
-    ↓
-根据问题涉及的模块判断修复负责人
-    ↓
-修复负责人读取交接文档 → 修复问题 → 更新状态
-    ↓
-发现问题者执行回归验证
-    ↓
-回归通过 → 问题关闭，继续正常流程
-回归失败 → 重新触发缺陷修复回路
-```
+当测试工程师、安全工程师或代码评审工程师发现 Critical/High 问题时，触发缺陷修复回路。流程、交接文档格式和 ID 命名规范详见 `shared/handoff-standard.md` 的「缺陷修复回路」章节。
 
 ---
 
@@ -434,11 +424,11 @@ A: 可以。MIT 许可证，自由使用、修改、分发。但 AI 生成的代
 
 | 指标 | 数值 |
 |------|------|
-| 总文件数 | 48 个 Markdown |
-| 总行数 | 18,000+ |
+| 总文件数 | 53 个 Markdown |
+| 总行数 | 25,000+ |
 | Skill 角色数 | 13 个（每个 300+ 行） |
-| 共享规范数 | 13 本 |
-| 文档模板数 | 9 个 |
+| 共享规范数 | 14 本 |
+| 文档模板数 | 12 个 |
 | 示例项目 | 1 个完整项目（TaskFlow） |
 | AI 工具支持 | 7 个主流工具 + 通用方法 |
 
