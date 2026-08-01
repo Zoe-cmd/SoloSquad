@@ -97,7 +97,7 @@ Updated: {YYYY-MM-DD}
 | AI 工程师 | AI | Phase 3 | AI 功能、RAG 管线 |
 | 测试工程师 | QA | Phase 4 | 测试计划、测试报告、缺陷报告 |
 | 安全工程师 | SEC | Phase 4 | 安全审计报告 |
-| 代码评审工程师 | CR | Phase 5 | 代码审查报告、重构建议 |
+| 代码评审工程师 | CR | Phase 4 | 代码审查报告、重构建议 |
 | 运维工程师 | OPS | Phase 5 | 部署计划、CI/CD 配置 |
 
 > 注：小项目可跳过非必需角色（如 UI/UX 设计师、AI 工程师）。详见 `workflow.md` 中的角色跳过规则。

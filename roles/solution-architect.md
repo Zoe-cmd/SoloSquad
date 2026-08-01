@@ -38,7 +38,7 @@
 - 修改 UI/UX 设计
 - 编写具体代码实现
 - 修改其他角色的交付物
-- 跳过 Human In The Loop 审批
+- 跳过 Human In The Loop 审批（HITL 检查点见 workflow.md 附录 B）
 - 越界修改其他角色的代码目录（见 shared/coding-standard.md 角色代码目录隔离矩阵）
 
 ## 岗位职责

@@ -78,6 +78,7 @@ TaskFlow 是一个面向中小型团队（5-50 人）的企业级任务管理平
 | Prometheus | 2.x | 监控 |
 | Grafana | 10.x | 可视化看板 |
 | ArgoCD | 2.x | GitOps 部署 |
+| Sentry | - | 错误监控 |
 
 ---
 

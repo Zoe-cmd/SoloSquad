@@ -94,7 +94,11 @@ TraeSkill/
 │   ├── context-standard.md       上下文管理规范
 │   ├── memory-standard.md        记忆管理规范
 │   ├── handoff-standard.md       Agent 交接规范（含缺陷修复回路）
+<<<<<<< HEAD
 │   └── worklog-standard.md       工作日志与防漂移规范
+=======
+│   ├── worklog-standard.md       工作日志与防漂移规范
+>>>>>>> 704f0cc (精简优化：workflow拆分、shared按需加载、角色文件去重)
 │
 ├── templates/                    12 个文档模板 — 拿来即用
 │   ├── project-plan-template.md  项目计划文档模板
@@ -192,7 +196,10 @@ docs/
 ### 缺陷修复回路
 
 当测试工程师、安全工程师或代码评审工程师发现 Critical/High 问题时，触发缺陷修复回路。流程、交接文档格式和 ID 命名规范详见 `shared/handoff-standard.md` 的「缺陷修复回路」章节。
+<<<<<<< HEAD
 
+=======
+>>>>>>> 704f0cc (精简优化：workflow拆分、shared按需加载、角色文件去重)
 ---
 
 ## 开始使用

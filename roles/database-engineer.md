@@ -378,6 +378,7 @@ CREATE TABLE products (
 CREATE TABLE orders (
   id UUID PRIMARY KEY,
   total_amount FLOAT -- 浮点数精度问题！
+);
 
 -- ✓ 正确：使用 NUMERIC 存储金额
 CREATE TABLE orders (

@@ -48,7 +48,7 @@ API 版本通过 URL 路径前缀控制 (`/v1/`, `/v2/`)。主版本号变更表
 
 | 属性 | access_token | refresh_token |
 |------|-------------|---------------|
-| 有效期 | 24 小时 | 7 天 |
+| 有效期 | 15 分钟 | 7 天 |
 | 存储位置 | 内存 (前端) | httpOnly Cookie |
 | 算法 | RS256 | RS256 |
 | 载荷 | user_id, role, iat, exp | user_id, token_id, iat, exp |
@@ -71,10 +71,17 @@ API 版本通过 URL 路径前缀控制 (`/v1/`, `/v2/`)。主版本号变更表
 **响应 (201 Created):**
 ```json
 {
-  "code": 0,
-  "message": "Registration successful. Please verify your email.",
   "data": {
-    "userId": "550e8400-e29b-41d4-a716-446655440000"
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "type": "user",
+    "attributes": {
+      "email": "john@example.com",
+      "displayName": "John Doe",
+      "status": "pending_verification"
+    }
+  },
+  "meta": {
+    "requestId": "req-abc-123"
   }
 }
 ```
@@ -100,19 +107,24 @@ API 版本通过 URL 路径前缀控制 (`/v1/`, `/v2/`)。主版本号变更表
 **响应 (200 OK):**
 ```json
 {
-  "code": 0,
-  "message": "Login successful",
   "data": {
-    "accessToken": "eyJhbGciOiJSUzI1NiIs...",
-    "refreshToken": "eyJhbGciOiJSUzI1NiIs...",
-    "expiresIn": 86400,
-    "user": {
-      "id": "550e8400-e29b-41d4-a716-446655440000",
-      "email": "john@example.com",
-      "displayName": "John Doe",
-      "role": "member",
-      "avatarUrl": null
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "type": "auth",
+    "attributes": {
+      "accessToken": "eyJhbGciOiJSUzI1NiIs...",
+      "refreshToken": "eyJhbGciOiJSUzI1NiIs...",
+      "expiresIn": 900,
+      "user": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "email": "john@example.com",
+        "displayName": "John Doe",
+        "role": "member",
+        "avatarUrl": null
+      }
     }
+  },
+  "meta": {
+    "requestId": "req-abc-123"
   }
 }
 ```
@@ -132,19 +144,34 @@ API 版本通过 URL 路径前缀控制 (`/v1/`, `/v2/`)。主版本号变更表
 **成功响应:**
 ```json
 {
-  "code": 0,
-  "message": "ok",
-  "data": { ... }
+  "data": {
+    "id": "task-123",
+    "type": "task",
+    "attributes": {
+      "title": "Task title",
+      "status": "todo"
+    }
+  },
+  "meta": {
+    "requestId": "req-abc-123"
+  }
 }
 ```
 
 **分页响应:**
 ```json
 {
-  "code": 0,
-  "message": "ok",
-  "data": {
-    "items": [ ... ],
+  "data": [
+    {
+      "id": "task-123",
+      "type": "task",
+      "attributes": {
+        "title": "Task title"
+      }
+    }
+  ],
+  "meta": {
+    "requestId": "req-abc-123",
     "pagination": {
       "page": 1,
       "limit": 20,
@@ -158,14 +185,16 @@ API 版本通过 URL 路径前缀控制 (`/v1/`, `/v2/`)。主版本号变更表
 **错误响应:**
 ```json
 {
-  "code": -1,
-  "message": "Validation failed",
   "error": {
     "code": "VALIDATION_ERROR",
+    "message": "Validation failed",
     "details": [
       { "field": "title", "message": "Title is required" },
       { "field": "priority", "message": "Priority must be one of: urgent, high, medium, low" }
     ]
+  },
+  "meta": {
+    "requestId": "req-abc-123"
   }
 }
 ```
