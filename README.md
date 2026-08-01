@@ -51,7 +51,7 @@ cd SoloSquad
 
 ### 在 TRAE / Claude Code / Cursor 中使用
 
-本仓库是纯 Markdown 驱动，任何支持文件读取的 AI 工具都能用。详细导入指南见 [docs/使用指南.md](docs/使用指南.md)（待完善）。
+本仓库是纯 Markdown 驱动，任何支持文件读取的 AI 工具都能用。
 
 ## 项目结构
 
